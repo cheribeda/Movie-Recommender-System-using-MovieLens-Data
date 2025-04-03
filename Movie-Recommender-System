@@ -1,0 +1,432 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "8afb37ec-aacf-42f9-a348-2a9f2eb7b261",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Links Dataset:\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>movieId</th>\n",
+       "      <th>imdbId</th>\n",
+       "      <th>tmdbId</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>114709</td>\n",
+       "      <td>862.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>113497</td>\n",
+       "      <td>8844.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>113228</td>\n",
+       "      <td>15602.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>114885</td>\n",
+       "      <td>31357.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5</td>\n",
+       "      <td>113041</td>\n",
+       "      <td>11862.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   movieId  imdbId   tmdbId\n",
+       "0        1  114709    862.0\n",
+       "1        2  113497   8844.0\n",
+       "2        3  113228  15602.0\n",
+       "3        4  114885  31357.0\n",
+       "4        5  113041  11862.0"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "Movies Dataset:\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>movieId</th>\n",
+       "      <th>title</th>\n",
+       "      <th>genres</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>Toy Story (1995)</td>\n",
+       "      <td>Adventure|Animation|Children|Comedy|Fantasy</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>Jumanji (1995)</td>\n",
+       "      <td>Adventure|Children|Fantasy</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>Grumpier Old Men (1995)</td>\n",
+       "      <td>Comedy|Romance</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>Waiting to Exhale (1995)</td>\n",
+       "      <td>Comedy|Drama|Romance</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5</td>\n",
+       "      <td>Father of the Bride Part II (1995)</td>\n",
+       "      <td>Comedy</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   movieId                               title  \\\n",
+       "0        1                    Toy Story (1995)   \n",
+       "1        2                      Jumanji (1995)   \n",
+       "2        3             Grumpier Old Men (1995)   \n",
+       "3        4            Waiting to Exhale (1995)   \n",
+       "4        5  Father of the Bride Part II (1995)   \n",
+       "\n",
+       "                                        genres  \n",
+       "0  Adventure|Animation|Children|Comedy|Fantasy  \n",
+       "1                   Adventure|Children|Fantasy  \n",
+       "2                               Comedy|Romance  \n",
+       "3                         Comedy|Drama|Romance  \n",
+       "4                                       Comedy  "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "Ratings Dataset:\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>userId</th>\n",
+       "      <th>movieId</th>\n",
+       "      <th>rating</th>\n",
+       "      <th>timestamp</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4.0</td>\n",
+       "      <td>964982703</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4.0</td>\n",
+       "      <td>964981247</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>6</td>\n",
+       "      <td>4.0</td>\n",
+       "      <td>964982224</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>47</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>964983815</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1</td>\n",
+       "      <td>50</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>964982931</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   userId  movieId  rating  timestamp\n",
+       "0       1        1     4.0  964982703\n",
+       "1       1        3     4.0  964981247\n",
+       "2       1        6     4.0  964982224\n",
+       "3       1       47     5.0  964983815\n",
+       "4       1       50     5.0  964982931"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "# Load each dataset\n",
+    "links = pd.read_csv(\"https://raw.githubusercontent.com/cheribeda/Predictive-Analytics/main/links.csv\")\n",
+    "movies = pd.read_csv(\"https://raw.githubusercontent.com/cheribeda/Predictive-Analytics/main/movies.csv\")\n",
+    "ratings = pd.read_csv(\"https://raw.githubusercontent.com/cheribeda/Predictive-Analytics/main/ratings.csv\")\n",
+    "\n",
+    "# Display the first few rows of each dataset\n",
+    "print(\"Links Dataset:\")\n",
+    "display(links.head())\n",
+    "print(\"\\nMovies Dataset:\")\n",
+    "display(movies.head())\n",
+    "print(\"\\nRatings Dataset:\")\n",
+    "display(ratings.head())\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "89d324fa-0a90-4e9e-94fc-c4ed3ea5cfb9",
+   "metadata": {},
+   "source": [
+    "Step 1: Data Preparation\n",
+    "\n",
+    "Merge Ratings and Movies Data: To create a user-movie matrix, merge the ratings and movies datasets on the movieId.\n",
+    "\n",
+    "Pivot Data: Convert the merged data into a user-movie matrix, where each row represents a user and each column represents a movie, with the values being the user’s rating for that movie."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "0faedb21-2a6f-4640-86f9-835546180f57",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Data Preparation\n",
+    "# Merge ratings and movies data to create a user-movie matrix. \n",
+    "# Merge the ratings and movies datasets on the movieId.\n",
+    "\n",
+    "Pivot Data: Convert the merged data into a user-movie matrix, where each row represents a user and each column represents a movie, with the values being the user’s rating for that movie.\n",
+    "\n",
+    "# Merge ratings and movies data\n",
+    "data = pd.merge(ratings, movies, on=\"movieId\")\n",
+    "\n",
+    "# Create user-movie matrix\n",
+    "user_movie_matrix = data.pivot_table(index='userId', columns='title', values='rating').fillna(0)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d9a44261-e6c7-4454-a80b-63ae53875cae",
+   "metadata": {},
+   "source": [
+    "Step 2: Compute Cosine Similarity\n",
+    "\n",
+    "To find movies similar to a given movie, calculate the cosine similarity between movie vectors in the user movie matrix. This will allow you to identify movies that received similar ratings from users."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "a6e1a778-ee1b-4935-b260-0e8fbf9b45da",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.metrics.pairwise import cosine_similarity\n",
+    "\n",
+    "# Compute cosine similarity between movies\n",
+    "movie_similarity = cosine_similarity(user_movie_matrix.T)\n",
+    "# Create a DataFrame for similarity scores for easier access\n",
+    "similarity_df = pd.DataFrame(movie_similarity, index=user_movie_matrix.columns, columns=user_movie_matrix.columns)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c9abdfad-2717-44fa-aa7d-47c5e4fa00ce",
+   "metadata": {},
+   "source": [
+    "Step 3: Define the Recommendation Function\n",
+    "\n",
+    "This function:\n",
+    "Takes a movie title as input.\n",
+    "Sorts movies by similarity score in descending order.\n",
+    "Returns the top ten similar movies excluding the input movie itself.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "0841b275-e4a2-49ed-b2df-2604a7d8378a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Recommended movies for Amityville Horror, The (1979) : Index(['Friday the 13th Part IV: The Final Chapter (1984)',\n",
+      "       'Friday the 13th Part 3: 3D (1982)', 'Child's Play 3 (1991)',\n",
+      "       'Amityville Curse, The (1990)', 'Child's Play 2 (1990)',\n",
+      "       'Christine (1983)', 'Child's Play (1988)', 'Amityville 3-D (1983)',\n",
+      "       'Poltergeist II: The Other Side (1986)',\n",
+      "       'Amityville: A New Generation (1993)'],\n",
+      "      dtype='object', name='title')\n"
+     ]
+    }
+   ],
+   "source": [
+    "def get_recommendations(movie_title, similarity_df, n=10):\n",
+    "    if movie_title not in similarity_df.columns:\n",
+    "        return \"Movie not found in the dataset.\"\n",
+    "    # Get similarity scores and sort them\n",
+    "    similar_scores = similarity_df[movie_title].sort_values(ascending=False)\n",
+    "    # Exclude the input movie from recommendations\n",
+    "    recommended_movies = similar_scores.index[1:n+1]\n",
+    "    return recommended_movies\n",
+    "\n",
+    "# Example \n",
+    "movie_title = \"Amityville Horror, The (1979)\"\n",
+    "recommended_movies = get_recommendations(movie_title, similarity_df)\n",
+    "print(\"Recommended movies for\", movie_title, \":\", recommended_movies)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "159fe81b-6caf-47bb-ad1c-017081a506cd",
+   "metadata": {},
+   "source": [
+    "Referenes:\n",
+    "\n",
+    "Harper, F. M., & Konstan, J. A. (2015). The MovieLens datasets: History and context. ACM Transactions on Interactive Intelligent Systems (TIIS), 5(4), 1-19.\n",
+    "\n",
+    "McKinney, W. (2010). Data structures for statistical computing in python. In Proceedings of the 9th Python in Science Conference (pp. 51-56)\n",
+    "\n",
+    "Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., & Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825–2830. Available from https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ba16af42-9524-43ba-9289-6f542f9a568e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
